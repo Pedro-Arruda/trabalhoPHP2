@@ -1,0 +1,53 @@
+.container-categorias {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.categorias-recentes {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.borda-card {
+    border: 1px solid rgb(212, 210, 210);
+}
+
+.card-btn {
+    background-color: rgb(116, 212, 116);
+    padding: 0.25rem 1.5rem;
+    color: white;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    font-size: 24px;
+}
+
+.produtos-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card-categoria {
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.card-produto {
+    font-size: 1rem;
+    color: rgb(83, 83, 83);
+    margin: 0;
+}
