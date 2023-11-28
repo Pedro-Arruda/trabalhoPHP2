@@ -1,5 +1,5 @@
 <?php
-
+    session_start();
     $qtd_carrinho = 0;
 
     if (isset($_SESSION['carrinho'])) {
@@ -36,7 +36,7 @@
 <body id="page-top">
 
     <div class="container mt-4">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
             <a class="navbar-brand" href="#">LOGO</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -65,9 +65,9 @@
                 <a class="nav-link disabled" href="#">Disabled</a>
                 </li>
             </ul>
-                <div>
+                <a class='btn btn-info' href='/produto/carrinho'>
                     Finalizar Compra ( {{$qtd_carrinho}} )
-                </div>
+                </a>
             </div>
         </nav>
 

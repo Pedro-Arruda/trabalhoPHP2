@@ -11,25 +11,25 @@ class ProdutoController extends Controller {
 
     public function index() {
         $produtos = Produto::select(
-            'produto.id',
-            'produto.nome',
-            'produto.preco',
-            'produto.quantidade',
-            'produto.descricao',
-            'produto.img_url',
+            'produtos.id',
+            'produtos.nome',
+            'produtos.preco',
+            'produtos.img_url',
             'categorias.nome as categoriaNome',
         )
-        ->join('categorias', 'categorias.id', '=', 'produto.id_categoria')
+        ->join('categorias', 'categorias.id', '=', 'produtos.id_categoria')
         ->get();
 
         $categorias = Categoria::all()->toArray();
         $marcas = Marca::all()->toArray();
 
-         return view("produto.index", [
+         return view("produto.index"
+         , [
             'produtos' => $produtos,
             'categorias' => $categorias,
             'marcas' => $marcas,
-        ]);
+        ]
+      );
     }
 
     public function adiciona_carrinho() {
@@ -46,43 +46,49 @@ class ProdutoController extends Controller {
 
     }
 
-    public function filtra_produtos($filtro, $tipoFiltro) {
-        var_dump($filtro, $tipoFiltro);
-        // $produtos = Produto::select(
-        //     'produto.id',
-        //     'produto.nome',
-        //     'produto.preco',
-        //     'produto.quantidade',
-        //     'produto.descricao',
-        //     'produto.img_url',
-        //     'categorias.nome as categoriaNome',
-        // )
-        // ->join('categorias', 'categorias.id', '=', 'produto.id_categoria')
-        // ->where($tipoFiltro, '=', $filtro)
-        // ->get();
+    public function filtra_produtos($tipoFiltro, Request $request) {
+          $produtos = Produto::select(
+            'produtos.id',
+            'produtos.nome',
+            'produtos.preco',
+            'produtos.img_url',
+            'categorias.nome as categoriaNome',
+            'marca.nome as marcaNome',
+        )
+        ->join('categorias', 'categorias.id', '=', 'produtos.id_categoria')
+        ->join('marca', 'marca.id', '=', 'produtos.id_marca')
+        ->where($tipoFiltro, '=', $request->input($tipoFiltro))
+        ->get();
 
-        // $categorias = Categoria::all()->toArray();
-        // $marcas = Marca::all()->toArray();
+        $categorias = Categoria::all()->toArray();
+        $marcas = Marca::all()->toArray();
 
-        // return view("produto.index", [
-        //     'produtos' => $produtos,
-        //     'categorias' => $categorias,
-        //     'marcas' => $marcas,
-        // ]);
-    }
+        return view("produto.index", [
+            'produtos' => $produtos,
+            'categorias' => $categorias,
+            'marcas' => $marcas,
+        ]);
+      }
+
+      public function finaliza_compra() {
+        session_start();
+        session_destroy();
+
+        return view("produto.finalizaCompra");
 
 
-    public function salvar_alterar(Request $request) {
-        $input_id = $request->input("id");
+      }
 
-        $cor = Cor::find($input_id);
+      public function carrinho() {
+        // session_start();
 
-        $cor->nome = $request->input("nome");
-        $cor->situacao = $request->input("situacao");
+        // if (!isset($_SESSION['carrinho']) || count($_SESSION['carrinho']) == 0) {
+        //     return redirect("/produto");
+        // }
 
-        $cor->save();
+        return view("produto.carrinho");
 
-        return redirect("/cor");
-        exit;
+        // array_push($_SESSION['carrinho'], $produtoId);
+
     }
 }
