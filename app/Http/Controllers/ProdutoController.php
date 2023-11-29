@@ -49,7 +49,7 @@ class ProdutoController extends Controller {
     }
 
     public function filtra_produtos($tipoFiltro, Request $request) {
-          $produtos = Produto::select(
+        $produtos = Produto::select(
             'produtos.id',
             'produtos.nome',
             'produtos.preco',

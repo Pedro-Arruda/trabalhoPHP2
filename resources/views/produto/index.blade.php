@@ -50,7 +50,7 @@
                   <div class="d-flex mt-4 justify-content-between">
                       <p class="card-categoria">' . $produto['categoriaNome'] . '</p>
                       <p class="card-categoria">' . $produto['marcaNome'] . '</p>
-                    </div>
+                  </div>
                     <p class="card-produto">' . $produto['nome'] . '</p>
                     <div class="d-flex flex-column justify-content-between">
                         <p>R$ ' . $produto['preco'] . '</p>
