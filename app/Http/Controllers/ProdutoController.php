@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Produto;
 use App\Models\Categoria;
 use App\Models\Marca;
+use App\Models\Venda;
+use App\Models\ProdutoVendido;
 
 class ProdutoController extends Controller {
 
@@ -70,14 +72,7 @@ class ProdutoController extends Controller {
         ]);
       }
 
-      public function finaliza_compra() {
-        session_start();
-        session_destroy();
-
-        return view("produto.finalizaCompra");
-
-
-      }
+     
 
       public function carrinho() {
         // session_start();
@@ -89,6 +84,40 @@ class ProdutoController extends Controller {
         return view("produto.carrinho");
 
         // array_push($_SESSION['carrinho'], $produtoId);
+
+    }
+
+    public function finaliza_compra(Request $request) {
+      session_start();
+  
+      $email = $request->input('email');
+      $total = $request->input('total'); 
+  
+      $venda = new Venda;
+      $venda->email = $request->input('email');
+      $venda->valor_total = $total;
+      $venda->save();
+      
+      $vendaId = $venda->id;
+  
+      $produtosNoCarrinho = array_count_values($_SESSION['carrinho']);
+  
+      foreach ($produtosNoCarrinho as $produto_id => $quantidade) {
+          $produto = Produto::find($produto_id);
+  
+          if ($produto) {
+              $produtoVendido = new ProdutoVendido;
+              $produtoVendido->produto_id = $produto_id;
+              $produtoVendido->venda_id = $vendaId;
+              $produtoVendido->quantidade = $quantidade;
+              $produtoVendido->save();
+          }
+      }
+  
+      session_destroy();
+  
+      return redirect("/produto");
+
 
     }
 }

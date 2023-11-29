@@ -3,47 +3,6 @@
 @extends('templateAdmin.index')
 
 @section('content')
-    {{-- <h2 class="text-dark">Categorias</h2>
-
-    <div class="container-categorias">
-        <?php
-             foreach($categorias as $categoria) {
-                echo '<div class="card borda-card mt-4 py-2 px-3" style="width: 11rem;">
-                        <img class="card-img-top" src="' . $categoria['img_url'] . '" height="140">
-                        <div class="card-body py-0">
-                            <p class="card-produto">' . $categoria['nome'] . '</p>
-                        </div>
-                    </div>';
-            };
-
-            foreach($categorias as $categoria) {
-                echo '<div class="card borda-card mt-4 py-2 px-3" style="width: 11rem;">
-                        <img class="card-img-top" src="' . $categoria['img_url'] . '" height="130">
-                        <div class="card-body py-0">
-                            <p class="card-produto">' . $categoria['nome'] . '</p>
-                        </div>
-                    </div>';
-            }
-        ?>
-    </div> --}}
-
-    {{-- <div class="categorias-recentes">
-        <?php
-            for ($i=0; $i < 2; $i++) {
-                echo '
-                <div class="card borda-card mt-4" style="width: 32rem;">
-                    <img class="card-img-top" src="
-                    https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaxiVAL1Mz1YOgt8Q-1L3pVLPlfZqQ9ys30Q&usqp
-                    =CAU" alt="Card image cap"
-                    height="150">
-                    <div class="card-body">
-                    <p class="card-text">Categoria 1</p>
-                    </div>
-                </div>
-                ';
-            };
-        ?>
-    </div> --}}
 
     <h2 class="text-dark my-5">Produtos</h2>
     <div class="d-flex justify-content-center">
@@ -77,6 +36,8 @@
             </select>
 
             <button class="btn btn-success d-flex align-items-center justify-content-center mt-2 w-100" >Filtrar</button>
+            </form>
+
         </div>
     </div>
 

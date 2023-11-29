@@ -15,8 +15,17 @@ use App\Models\Produto;
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/carrinho.css">
+  <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/css/sb-admin-2.css" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
   <title>Carrinho</title>
 </head>
+
+<div class="container mt-4">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white d-flex justify-content-between">
+            <a class="navbar-brand" href="/produto">LOJA</a>
+        </nav>
+    </div>
 
 <div class="container">
   <table>
@@ -52,6 +61,8 @@ use App\Models\Produto;
                 ?>
   </table>
   <?php
+    $total = 0;
+
 
 if (isset($_SESSION['carrinho']) && count(($_SESSION['carrinho']))) {
 
@@ -59,6 +70,7 @@ if (isset($_SESSION['carrinho']) && count(($_SESSION['carrinho']))) {
   <div class='totais-container'>
     <div class='totais'>
       <p>Total: R$ <?php
+
         $total = array_reduce($_SESSION['carrinho'], function($carry, $item) {
           $item = Produto::find($item);
 
@@ -70,9 +82,16 @@ if (isset($_SESSION['carrinho']) && count(($_SESSION['carrinho']))) {
       <p class='center'>ou</p>
       <p>em 12x de R$ <?php echo number_format($total / 12, 2, ',', '')?></p>
 
-      <a href='/produto/finaliza-compra' class='btn-finaliza-compra '>
-        Finalizar compra
-      </a>
+      <form action="/produto/finaliza-compra" method="post">
+        @csrf
+        <input type="text" value={{$total}} name='total' hidden>
+
+        <button class='btn-finaliza-compra '>
+          Finalizar compra
+        </button>
+  
+        <input type="email" name="email" class='py-2 px-4 mt-2' placeholder='Digite seu e-mail para finalizar a compra'>
+      </form>
     </div>
   </div>
   <?php
