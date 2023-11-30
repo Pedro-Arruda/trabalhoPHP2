@@ -1,5 +1,6 @@
+@php
 
-
+@endphp
 @extends('templateAdmin.index')
 
 @section('content')
@@ -7,7 +8,7 @@
     <h2 class="text-dark my-5">Produtos</h2>
     <div class="d-flex justify-content-center">
         <div class="d-flex flex-column">
-          
+
           <form action="/produto/filtrar/id_marca" method="post">
             @csrf
               <select class="form-control" name="id_marca" aria-label="Default select example">
@@ -66,7 +67,7 @@
     </div>
 
 
-    
+
     </div>
 
 @endsection

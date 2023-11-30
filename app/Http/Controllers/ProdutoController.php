@@ -13,13 +13,13 @@ class ProdutoController extends Controller {
 
     public function index() {
         $produtos = Produto::select(
-            'produtos.id',
-            'produtos.nome',
-            'produtos.preco',
-            'produtos.img_url',
+            'produto.id',
+            'produto.nome',
+            'produto.preco',
+            'produto.img_url',
             'categorias.nome as categoriaNome',
         )
-        ->join('categorias', 'categorias.id', '=', 'produtos.id_categoria')
+        ->join('categorias', 'categorias.id', '=', 'produto.id_categoria')
         ->get();
 
         $categorias = Categoria::all()->toArray();
@@ -50,15 +50,15 @@ class ProdutoController extends Controller {
 
     public function filtra_produtos($tipoFiltro, Request $request) {
         $produtos = Produto::select(
-            'produtos.id',
-            'produtos.nome',
-            'produtos.preco',
-            'produtos.img_url',
+            'produto.id',
+            'produto.nome',
+            'produto.preco',
+            'produto.img_url',
             'categorias.nome as categoriaNome',
             'marca.nome as marcaNome',
         )
-        ->join('categorias', 'categorias.id', '=', 'produtos.id_categoria')
-        ->join('marca', 'marca.id', '=', 'produtos.id_marca')
+        ->join('categorias', 'categorias.id', '=', 'produto.id_categoria')
+        ->join('marca', 'marca.id', '=', 'produto.id_marca')
         ->where($tipoFiltro, '=', $request->input($tipoFiltro))
         ->get();
 
@@ -72,7 +72,7 @@ class ProdutoController extends Controller {
         ]);
       }
 
-     
+
 
       public function carrinho() {
         // session_start();
@@ -89,22 +89,22 @@ class ProdutoController extends Controller {
 
     public function finaliza_compra(Request $request) {
       session_start();
-  
+
       $email = $request->input('email');
-      $total = $request->input('total'); 
-  
+      $total = $request->input('total');
+
       $venda = new Venda;
       $venda->email = $request->input('email');
       $venda->valor_total = $total;
       $venda->save();
-      
+
       $vendaId = $venda->id;
-  
+
       $produtosNoCarrinho = array_count_values($_SESSION['carrinho']);
-  
+
       foreach ($produtosNoCarrinho as $produto_id => $quantidade) {
           $produto = Produto::find($produto_id);
-  
+
           if ($produto) {
               $produtoVendido = new ProdutoVendido;
               $produtoVendido->produto_id = $produto_id;
@@ -113,9 +113,9 @@ class ProdutoController extends Controller {
               $produtoVendido->save();
           }
       }
-  
+
       session_destroy();
-  
+
       return redirect("/produto");
 
 
